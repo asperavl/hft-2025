@@ -3,18 +3,60 @@ let signer;
 let userAddress;
 
 // 🔴 CONFIGURATION
-const API_URL = "http://127.0.0.1:5000"; // Backend URL
+const API_URL = "http://127.0.0.1:5000"; 
 const CONTRACT_ADDRESS = "0x0cC4DEc7998306038F707e040a8F57e08daa4907"; 
 
 const CONTRACT_ABI = [
   "function getReputation(address) view returns (uint256)",
-  "function addReputation(address user, uint8 actionType) external", // Note: uint8 for enum
+  "function addReputation(address user, uint8 actionType) external",
   "function organizers(address) view returns (bool)"
 ];
 
 const connectBtn = document.getElementById("connectWalletBtn");
 const walletDisplay = document.getElementById("walletAddress");
-const actionsListDiv = document.getElementById("actionsList"); // We will add this container in HTML
+
+// ================== 1. AUTO-DETECT ACCOUNT SWITCHING ==================
+// This is the key fix. It listens for MetaMask changes in real-time.
+if (window.ethereum) {
+    window.ethereum.on('accountsChanged', handleAccountsChanged);
+}
+
+async function handleAccountsChanged(accounts) {
+    // 1. Wipe the screen immediately
+    resetUI();
+
+    if (accounts.length === 0) {
+        console.log("Please connect to MetaMask.");
+    } else {
+        // 2. Re-initialize with the NEW account
+        provider = new ethers.providers.Web3Provider(window.ethereum);
+        signer = provider.getSigner();
+        userAddress = accounts[0]; // Get the new address
+
+        walletDisplay.innerText = userAddress;
+
+        // 3. Check if THIS specific new address is an organizer
+        await checkOrganizer();
+        
+        // Optional: Auto-load reputation for convenience
+        loadReputation(); 
+    }
+}
+
+function resetUI() {
+    // Clear Wallet Text
+    walletDisplay.innerText = "Not connected";
+    
+    // Clear Reputation
+    document.getElementById("reputation").innerText = "0";
+    
+    // STRICTLY HIDE Organizer Dashboard
+    document.getElementById("organizerSection").style.display = "none";
+    document.getElementById("pendingActionsList").innerHTML = "";
+    
+    // Clear Status Messages
+    document.getElementById("statusMessage").innerText = "";
+}
 
 // ================== CONNECT WALLET ==================
 connectBtn.onclick = async () => {
@@ -24,37 +66,51 @@ connectBtn.onclick = async () => {
   }
 
   provider = new ethers.providers.Web3Provider(window.ethereum);
-  await provider.send("eth_requestAccounts", []);
-
-  signer = provider.getSigner();
-  userAddress = await signer.getAddress();
-
-  walletDisplay.innerText = userAddress;
+  // This triggers the popup
+  const accounts = await provider.send("eth_requestAccounts", []);
   
-  // Load initial data
-  checkOrganizer();
-  fetchPendingActions(); // Fetch actions from backend
+  // We manually trigger the handler to set up the initial state
+  handleAccountsChanged(accounts);
 };
 
 // ================== READ REPUTATION ==================
 async function loadReputation() {
-  if (!provider || !userAddress) {
-    alert("Connect wallet first");
-    return;
+  if (!provider || !userAddress) return;
+
+  try {
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, provider);
+      const reputation = await contract.getReputation(userAddress);
+      document.getElementById("reputation").innerText = reputation.toString();
+  } catch (err) {
+      console.error("Error loading reputation:", err);
   }
-  const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, provider);
-  const reputation = await contract.getReputation(userAddress);
-  document.getElementById("reputation").innerText = reputation.toString();
 }
 
-// ================== FETCH & RENDER ACTIONS (BACKEND) ==================
+// ================== CHECK ORGANIZER ROLE ==================
+async function checkOrganizer() {
+  if (!provider || !userAddress) return;
+
+  // Defensive: Ensure it is hidden before checking
+  document.getElementById("organizerSection").style.display = "none";
+
+  const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, provider);
+  const isOrganizer = await contract.organizers(userAddress);
+  
+  // Only show if the contract says YES for this specific wallet
+  if (isOrganizer) {
+    document.getElementById("organizerSection").style.display = "block";
+    fetchPendingActions(); // Load data only if authorized
+  }
+}
+
+// ================== FETCH & RENDER ACTIONS ==================
 async function fetchPendingActions() {
     try {
         const res = await fetch(`${API_URL}/actions`);
         const actions = await res.json();
         
         const listContainer = document.getElementById("pendingActionsList");
-        listContainer.innerHTML = ""; // Clear list
+        listContainer.innerHTML = ""; 
 
         actions.forEach((act, index) => {
             if(!act.approved) {
@@ -63,7 +119,7 @@ async function fetchPendingActions() {
                 item.innerHTML = `
                     <div>
                         <strong>Event:</strong> ${act.eventId} <br>
-                        <small>User: ${act.user.substring(0,6)}... | Action Type: ${act.action}</small>
+                        <small>User: ${act.user.substring(0,6)}... | Action: ${act.action}</small>
                     </div>
                     <button class="btn btn-sm btn-primary" onclick="approveAction(${index})">Approve</button>
                 `;
@@ -75,79 +131,55 @@ async function fetchPendingActions() {
     }
 }
 
-// ================== APPROVE ACTION (INTEGRATION LOGIC) ==================
+// ================== APPROVE ACTION ==================
 async function approveAction(index) {
   const status = document.getElementById("statusMessage");
-  
-  if (!signer) {
-    alert("Connect wallet first");
-    return;
-  }
+  if (!signer) return alert("Connect wallet first");
 
   try {
     status.innerText = "Verifying with Backend...";
-
-    // STEP 1: Backend Verification
-    // We send the index and OUR address. Backend checks if we match the event.
+    
     const response = await fetch(`${API_URL}/approve`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-            index: index, 
-            organizerAddress: userAddress 
-        })
+        body: JSON.stringify({ index: index, organizerAddress: userAddress })
     });
 
     const data = await response.json();
+    if (!response.ok) throw new Error(data.error || "Verification failed");
 
-    if (!response.ok) {
-        throw new Error(data.error || "Backend verification failed");
-    }
-
-    // STEP 2: Blockchain Transaction
-    // If backend didn't throw error, we are authorized!
     status.innerText = "Backend verified! Requesting Signature...";
 
     const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
-    
-    // Call the smart contract with data from the verified action
-    // data.data contains { user: "...", action: 0, ... }
     const tx = await contract.addReputation(data.data.user, data.data.action);
     
-    status.innerText = "Transaction sent. Waiting for confirmation...";
+    status.innerText = "Waiting for confirmation...";
     await tx.wait();
 
-    status.innerText = "Success! Reputation added on-chain.";
-    fetchPendingActions(); // Refresh UI
+    status.innerText = "Success! Reputation added.";
+    fetchPendingActions(); 
 
   } catch (err) {
     console.error(err);
     status.innerText = "Error: " + err.message;
-    alert(err.message);
   }
 }
 
-async function checkOrganizer() {
-  if (!provider || !userAddress) return;
-  const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, provider);
-  const isOrganizer = await contract.organizers(userAddress);
-  
-  if (isOrganizer) {
-    document.getElementById("organizerSection").style.display = "block";
-  }
-}
-
-// Test function to simulate a user submitting an action (for demo purposes)
+// Test function
 window.simulateSubmit = async () => {
+    if(!userAddress) return alert("Connect wallet first!");
     await fetch(`${API_URL}/submit`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            user: userAddress, // Uses connected wallet as the "attendee"
-            action: 0, // 0 = ATTENDED
-            eventId: "event_1" // Matches the ID in python EVENT_REGISTRY
+            user: userAddress, 
+            action: 0, 
+            eventId: "event_1" 
         })
     });
-    alert("Action submitted! Now check the Organizer list.");
-    fetchPendingActions();
+    alert("Action submitted! Switch to Organizer wallet to approve.");
+    // If we are currently an organizer, refresh the list immediately
+    if(document.getElementById("organizerSection").style.display === "block") {
+        fetchPendingActions();
+    }
 }
