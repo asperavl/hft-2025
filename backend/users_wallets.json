@@ -10,5 +10,9 @@
     "suryasuresh.10a@gmail.com": {
         "address": "0xD407c606864EB2a847F7CF79f92cc6863Acc1924",
         "private_key": "4eb08e63cae44bf5feda5152781da3db9cc31bb7551cc2f75962a071a528c53d"
+    },
+    "newbiediscord@gmail.com": {
+        "address": "0x6Bd172683e30cb82EA3a2DD7FC3b2eeF5B6bA4a0",
+        "private_key": "00c8a4dbb7a6797332de032bb6cabc73a498b1454c23123916d1e9f5aa27af2d"
     }
 }

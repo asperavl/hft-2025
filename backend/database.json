@@ -1,0 +1,235 @@
+{
+    "events": [
+        {
+            "id": "evt_hackathon_2025",
+            "name": "Global Hackathon 2025",
+            "organizer": "0xcb7823f557e49fd23c70c27fa7739d8e695561b6",
+            "created_at": 1767557659.7660375
+        },
+        {
+            "id": "evt_relief_fund",
+            "name": "Disaster Relief: Zone A",
+            "organizer": "0xcb7823f557e49fd23c70c27fa7739d8e695561b6",
+            "created_at": 1767557659.7660375
+        }
+    ],
+    "actions": [
+        {
+            "id": "c4a0f1d3-5cf6-42f7-ac37-d3c8aea5df29",
+            "user": "0xEED623dF16375e2fC8A4c614A788ea4f85f12E0E",
+            "user_email": "buggyboy247@gmail.com",
+            "eventId": "evt_relief_fund",
+            "eventName": "Disaster Relief: Zone A",
+            "status": "approved",
+            "timestamp": 1767557692.6440556,
+            "final_data": {
+                "community_id": "global_hackathon_dao",
+                "schema_id": "v1.0",
+                "action_id": "ATTENDED",
+                "base_points": 5,
+                "bonus_points": 0
+            }
+        },
+        {
+            "id": "9ca3a2b0-1746-41a1-a658-86091d3edc48",
+            "user": "0xC648955313EcAf0ffDc20c8eE065B6868d4c4728",
+            "user_email": "suryasuresh.mec@gmail.com",
+            "eventId": "evt_hackathon_2025",
+            "eventName": "Global Hackathon 2025",
+            "status": "approved",
+            "timestamp": 1767557748.6206384,
+            "final_data": {
+                "community_id": "global_hackathon_dao",
+                "schema_id": "v1.0",
+                "action_id": "CONTRIB_LARGE",
+                "base_points": 20,
+                "bonus_points": 10
+            }
+        },
+        {
+            "id": "5d9f4de4-1c7d-4ac5-98c1-90d90b0d813a",
+            "user": "0xD407c606864EB2a847F7CF79f92cc6863Acc1924",
+            "user_email": "suryasuresh.10a@gmail.com",
+            "eventId": "evt_hackathon_2025",
+            "eventName": "Global Hackathon 2025",
+            "status": "approved",
+            "timestamp": 1767557851.2546148,
+            "final_data": {
+                "community_id": "global_hackathon_dao",
+                "schema_id": "v1.0",
+                "action_id": "CONTRIB_SMALL",
+                "base_points": 10,
+                "bonus_points": 2
+            }
+        },
+        {
+            "id": "da6f8de3-021a-4a3b-8c31-6f70a4bdad02",
+            "user": "0xEED623dF16375e2fC8A4c614A788ea4f85f12E0E",
+            "user_email": "buggyboy247@gmail.com",
+            "eventId": "evt_relief_fund",
+            "eventName": "Disaster Relief: Zone A",
+            "status": "approved",
+            "timestamp": 1767558159.758565,
+            "final_data": {
+                "community_id": "global_hackathon_dao",
+                "schema_id": "v1.0",
+                "action_id": "ATTENDED",
+                "base_points": 5,
+                "bonus_points": 0
+            }
+        },
+        {
+            "id": "5fc6b413-c8a5-43ab-bd40-b9164c875260",
+            "user": "0x6Bd172683e30cb82EA3a2DD7FC3b2eeF5B6bA4a0",
+            "user_email": "newbiediscord@gmail.com",
+            "eventId": "evt_hackathon_2025",
+            "eventName": "Global Hackathon 2025",
+            "status": "approved",
+            "timestamp": 1767558252.6677868,
+            "final_data": {
+                "community_id": "global_hackathon_dao",
+                "schema_id": "v1.0",
+                "action_id": "ATTENDED",
+                "base_points": 5,
+                "bonus_points": 0
+            }
+        },
+        {
+            "id": "d16335a3-e39c-4d57-9b53-abbcdb348280",
+            "user": "0xD407c606864EB2a847F7CF79f92cc6863Acc1924",
+            "user_email": "suryasuresh.10a@gmail.com",
+            "eventId": "evt_relief_fund",
+            "eventName": "Disaster Relief: Zone A",
+            "status": "approved",
+            "timestamp": 1767558829.26854,
+            "final_data": {
+                "community_id": "global_hackathon_dao",
+                "schema_id": "v1.0",
+                "action_id": "CONTRIB_LARGE",
+                "base_points": 20,
+                "bonus_points": 6
+            }
+        },
+        {
+            "id": "ab1cd618-448e-4806-89f7-d0759ef2f1bf",
+            "user": "0xD407c606864EB2a847F7CF79f92cc6863Acc1924",
+            "user_email": "suryasuresh.10a@gmail.com",
+            "eventId": "evt_hackathon_2025",
+            "eventName": "Global Hackathon 2025",
+            "status": "approved",
+            "timestamp": 1767559086.3022583,
+            "final_data": {
+                "community_id": "global_hackathon_dao",
+                "schema_id": "v1.0",
+                "action_id": "CONTRIB_SMALL",
+                "base_points": 10,
+                "bonus_points": 0
+            }
+        },
+        {
+            "id": "91969386-43b2-4df1-b398-cc8e29a216a3",
+            "user": "0xEED623dF16375e2fC8A4c614A788ea4f85f12E0E",
+            "user_email": "buggyboy247@gmail.com",
+            "eventId": "evt_hackathon_2025",
+            "eventName": "Global Hackathon 2025",
+            "status": "approved",
+            "timestamp": 1767559299.3446841,
+            "final_data": {
+                "community_id": "global_hackathon_dao",
+                "schema_id": "v1.0",
+                "action_id": "CONTRIB_LARGE",
+                "base_points": 20,
+                "bonus_points": 3
+            }
+        },
+        {
+            "id": "c03b8fa3-5dd8-4d0c-8ff7-5ea544b69aed",
+            "user": "0x6Bd172683e30cb82EA3a2DD7FC3b2eeF5B6bA4a0",
+            "user_email": "newbiediscord@gmail.com",
+            "eventId": "evt_hackathon_2025",
+            "eventName": "Global Hackathon 2025",
+            "status": "approved",
+            "timestamp": 1767559343.4158943,
+            "final_data": {
+                "community_id": "global_hackathon_dao",
+                "schema_id": "v1.0",
+                "action_id": "CONTRIB_LARGE",
+                "base_points": 20,
+                "bonus_points": 2
+            }
+        },
+        {
+            "id": "f535474a-d8db-407b-a323-62db1ce2b2eb",
+            "user": "0xC648955313EcAf0ffDc20c8eE065B6868d4c4728",
+            "user_email": "suryasuresh.mec@gmail.com",
+            "eventId": "evt_relief_fund",
+            "eventName": "Disaster Relief: Zone A",
+            "status": "approved",
+            "timestamp": 1767559500.526562,
+            "final_data": {
+                "community_id": "global_hackathon_dao",
+                "schema_id": "v1.0",
+                "action_id": "CONTRIB_LARGE",
+                "base_points": 20,
+                "bonus_points": 7
+            }
+        },
+        {
+            "id": "713c7edf-a67f-4dc0-b66c-df0b73dfe515",
+            "user": "0xC648955313EcAf0ffDc20c8eE065B6868d4c4728",
+            "user_email": "suryasuresh.mec@gmail.com",
+            "eventId": "evt_hackathon_2025",
+            "eventName": "Global Hackathon 2025",
+            "status": "approved",
+            "timestamp": 1767559557.356317,
+            "final_data": {
+                "community_id": "global_hackathon_dao",
+                "schema_id": "v1.0",
+                "action_id": "ATTENDED",
+                "base_points": 5,
+                "bonus_points": 0
+            }
+        },
+        {
+            "id": "67162485-0a27-4bf4-8702-96ab3f7fa8bc",
+            "user": "0xEED623dF16375e2fC8A4c614A788ea4f85f12E0E",
+            "user_email": "buggyboy247@gmail.com",
+            "eventId": "evt_hackathon_2025",
+            "eventName": "Global Hackathon 2025",
+            "status": "approved",
+            "timestamp": 1767560203.1961396,
+            "final_data": {
+                "action_id": "CONTRIB_LARGE",
+                "base_points": 20,
+                "bonus_points": 2,
+                "community_id": "global_hackathon_dao",
+                "schema_id": "v1.0"
+            }
+        },
+        {
+            "id": "d8dd0cd4-7368-4116-a926-953c53d407da",
+            "user": "0xEED623dF16375e2fC8A4c614A788ea4f85f12E0E",
+            "user_email": "buggyboy247@gmail.com",
+            "eventId": "evt_relief_fund",
+            "eventName": "Disaster Relief: Zone A",
+            "status": "rejected",
+            "timestamp": 1767560446.7457619
+        },
+        {
+            "id": "23903583-ad27-4408-ace4-0e5cae9a023c",
+            "user": "0xC648955313EcAf0ffDc20c8eE065B6868d4c4728",
+            "user_email": "suryasuresh.mec@gmail.com",
+            "eventId": "evt_hackathon_2025",
+            "eventName": "Global Hackathon 2025",
+            "status": "approved",
+            "timestamp": 1767560600.5364149,
+            "final_data": {
+                "action_id": "CONTRIB_SMALL",
+                "base_points": 10,
+                "bonus_points": 2,
+                "community_id": "global_hackathon_dao",
+                "schema_id": "v1.0"
+            }
+        }
+    ]
+}
