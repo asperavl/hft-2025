@@ -2,14 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-    integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
-    crossorigin="anonymous"
-  >
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <title>Community Reputation</title>
 </head>
 
@@ -23,49 +19,65 @@
         <small class="text-muted">Decentralized trust system</small>
       </div>
 
-      <button id="connectWalletBtn" class="btn btn-outline-primary btn-block">
-        🔌 Connect Wallet
-      </button>
+      <div id="loginSection" class="text-center">
+        <p class="mb-3">Sign in to view your reputation</p>
+        
+        <div id="g_id_onload"
+             data-client_id="164424088330-vd0sjmmvicfesi6guaibaefru3iifiq4.apps.googleusercontent.com"
+             data-callback="handleCredentialResponse"
+             data-auto_prompt="false">
+        </div>
+        <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="left"></div>
 
-      <div class="mt-3 text-center">
-        <p class="font-weight-bold mb-1">Connected Wallet</p>
-        <p id="walletAddress" class="wallet-box bg-light p-2 rounded text-monospace" style="font-size: 0.9em;">
-          Not connected
-        </p>
+        <hr class="my-4">
+        <button id="organizerLoginBtn" class="btn btn-sm btn-link text-muted">
+           Are you an Organizer? Connect Wallet
+        </button>
       </div>
 
-      <hr>
-
-      <div class="user-dashboard">
-        <h5 class="text-center">My Profile</h5>
+      <div id="userDashboard" style="display:none;">
         
-        <div class="reputation-display text-center my-3">
-            <h6 class="text-muted">Reputation Score</h6>
-            <h1 id="reputation" class="display-4 font-weight-bold text-success">0</h1>
+        <div class="alert alert-success text-center">
+             👋 Welcome, <span id="userEmailDisplay" class="font-weight-bold">User</span>
         </div>
 
-        <button class="btn btn-success btn-block" onclick="loadReputation()">
-          📊 Refresh Score
-        </button>
+        <div class="reputation-display text-center my-3">
+            <h6 class="text-muted">Reputation Score</h6>
+            <h1 id="reputation" class="display-4 font-weight-bold text-success">--</h1>
+            <small class="text-muted" style="font-size:0.7em">Wallet: <span id="custodialWalletDisplay">...</span></small>
+        </div>
 
-        <button class="btn btn-info btn-block mt-2" onclick="window.simulateSubmit()">
-          📝 Simulate User Submission
+        <div class="history-section mb-3 text-left">
+            <h6 class="border-bottom pb-2">📜 Verified History</h6>
+            <div id="historyList" class="list-group list-group-flush" style="max-height: 200px; overflow-y: auto;">
+                <div class="text-center text-muted small mt-2">Loading blockchain history...</div>
+            </div>
+        </div>
+
+        <button class="btn btn-info btn-block mt-2" onclick="simulateSubmit()">
+          📝 Simulate Volunteering
+        </button>
+        
+        <button class="btn btn-outline-secondary btn-block mt-3" onclick="logout()">
+          Logout
         </button>
       </div>
 
       <div id="organizerSection" style="display:none;" class="mt-4 pt-3 border-top border-warning">
         <div class="d-flex justify-content-between align-items-center mb-3">
              <h5 class="mb-0 text-warning">Organizer Admin</h5>
-             <span class="badge badge-warning">Authorized</span>
+             <span class="badge badge-warning" id="organizerWalletDisplay">Connected</span>
         </div>
         
         <p class="text-muted"><small>Pending Approvals</small></p>
-        
-        <div id="pendingActionsList">
-           </div>
+        <div id="pendingActionsList"></div>
+
+        <button class="btn btn-outline-danger btn-block mt-3" onclick="logout()">
+          Disconnect Wallet
+        </button>
       </div>
 
-      <p id="statusMessage" class="status-message text-center mt-3 font-weight-bold"></p>
+      <p id="statusMessage" class="status-message text-center mt-3"></p>
 
     </div>
   </div>
