@@ -1,0 +1,39 @@
+/* Center the card vertically and horizontally */
+.page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Main app card styling */
+.app-card {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 12px;
+}
+
+/* Wallet address box */
+.wallet-box {
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  padding: 8px;
+  font-size: 0.85rem;
+  color: #6c757d;
+  word-break: break-all;
+}
+
+/* Reputation display emphasis */
+.reputation-display h1 {
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Status message styling */
+.status-message {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #6c757d;
+}
